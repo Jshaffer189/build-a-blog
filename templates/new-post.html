@@ -7,21 +7,21 @@
       <label>
         Post Title:
       </label>
-        <input type="text" name="title_post" value={{title_post}}>
+        <input type="text" name="post_title" value={{post_title}}>
         <p class="error">{{error_title}}</p>
       <br/>
       <label>
         Post:
       </label>
-        <input type="textarea" name="blog_body" value={{blog_body}}>
+        <input type="textarea" name="post_body" value={{post_body}}>
         <p class="error">{{error_blog}}</p>
         <br/>
         <input type="submit" name="Submit Post" />
     </form>
 
         {% for post in posts %}
-        <h2>{{post.title_post}}</h2>
-        <p>{{post.blog_body}}</p>
+        <h2>{{post.post_title}}</h2>
+        <p>{{post.post_body}}</p>
         {% endfor %}
 
 {% endblock %}
