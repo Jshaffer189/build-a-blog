@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!--a completed task list that loops through task.name-->
+{% for post in posts %}
+  <h2>{{ post.post_title }}</h2>
+  <p>{{ post.post_body }}</p>
+{% endfor %}
+
+{% endblock %}
