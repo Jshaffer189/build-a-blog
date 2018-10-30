@@ -26,15 +26,15 @@ class Blog(db.Model):
     #id associated with the task class will go in to the designated column configured to a integer, and repersent the Primary key
     id = db.Column(db.Integer, primary_key=True)
      #name field column string data type with a max length of 120
-    post_title = db.Column(db.String(120))
+    title_post = db.Column(db.String(245))
     #set completed database column
     #boolean to indicate if task has been completed
-    post_body = db.Column(db.String(25000))
+    blog_body = db.Column(db.String(1200))
 
     #set constructor
     def __init__(self, title, body):
-        self.post_title = title
-        self.post_body = body
+        self.title_post = title
+        self.blog_body = body
     #classes have to be caps
 
 @app.route('/blog', methods = ['GET', 'POST'])
@@ -46,36 +46,36 @@ def index():
 @app.route('/new-post', methods=['GET', 'POST'])
 def new_post():
 
-    post_body = ''
-    post_title = ''
+    blog_body = ''
+    title_post = ''
     error_title = ''
     error_blog = ''
 
     #obtain input data
     if request.method == 'POST':
-        post_title = request.form['post_title']
-        post_body = request.form['post_body']
-        if post_title == '':
+        title_post = request.form['title_post']
+        blog_body = request.form['blog_body']
+        if title_post == '':
             error_title = 'You might need a Title!'
-        elif post_body == '':
-            error_blog = 'Your gonna wanna type some buttons!'
+        elif blog_body == '':
+            error_blog = 'Your going to need to type some buttons!'
         else:
             #insert into database
             #commit database add
-            new = Blog(post_title, post_body)
+            new = Blog(title_post, blog_body)
             db.session.add(new)
             db.session.commit()
 
             return redirect('/single-post?id={0}'.format(new.id))
 
     return render_template('new-post.html', title="New Post", error_title=error_title,
-                error_blog=error_blog, post_title=post_title, post_body=post_body)
+                error_blog=error_blog, title_post=title_post, blog_body=blog_body)
 
 @app.route('/single-post', methods=['GET'])
 def single_post():
 
-    retrieved_id = request.args.get('id')
-    posts = db.session.query(Blog.post_title, Blog.post_body).filter_by(id=retrieved_id)
+    get_id = request.args.get('id')
+    posts = db.session.query(Blog.title_post, Blog.blog_body).filter_by(id=get_id)
     #redirect back to post page 
     return render_template('single-post.html', title="Single Post", posts=posts)
 
